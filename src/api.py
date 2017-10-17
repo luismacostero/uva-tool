@@ -37,13 +37,17 @@ def get_problem_info(problemNumber):
     rinfo = r.json()
     info = {}
 
+    info["number"] = rinfo["num"]
     info["pdf_url"] = (uva_url + uva_pdfProblem_url +
                        str(int(problemNumber / 100)) +
                        '/' + str(problemNumber) + '.pdf')
-    info["number"] = rinfo["num"]
+    info["title"] = rinfo["title"]
     return info
 
 
 def checkRequest(request):
     if request.status_code != 200:
         raise Exception("Return code error")
+
+
+
