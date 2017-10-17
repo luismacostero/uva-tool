@@ -1,0 +1,7 @@
+/*@info_general
+author: {{author}}
+date: {{date}}
+id: {{id}}
+url: {{url}}
+categories: {{categories}}
+**********************/

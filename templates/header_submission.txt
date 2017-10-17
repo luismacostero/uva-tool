@@ -1,0 +1,7 @@
+/*@info_submission
+time: {{time}}
+best: {{best_time}}
+rank: {{rank_pos}}
+tries: {{n_tries}}
+*/
+
