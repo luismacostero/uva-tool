@@ -1,25 +1,22 @@
 #!/usr/bin/python
 
-import os
 import sys
-import getopt
-import argparse
 import src.config
 
-_version = "0.0.2"
+
+def ac_help(args):
+    res = __file__ + " <command>\n"
+    res += "\n<commands>"
+    for k in _actions:
+        res += "\n - " + k + ""
+    print(res)
 
 
-def setArgumentParser():
-    desc = "%(prog)s: uva helper tool."
-    commands = ["init"]
-    argParser = argparse.ArgumentParser(description=desc)
-    # Program Parameters
-    argParser.add_argument("-v", "--version", action='version',
-                           version='%(prog)s {}'.format(_version))
-
-    argParser.add_argument("command", choices=commands,
-                           help="Action")
-    return argParser
+def ac_open(args):
+    if len(args) < 1:
+        ac_help(args)
+        raise Exception("Program number not found")
+    print(args)
 
 
 def ac_init(args):
@@ -28,10 +25,17 @@ def ac_init(args):
     src.config.write_config(config)
 
 _actions = {
-    "init": ac_init
+    "help": ac_help,
+    "init": ac_init,
+    "open": ac_open
     }
 
 if __name__ == "__main__":
-    argParser = setArgumentParser()
-    args = argParser.parse_args(sys.argv[1:])
-    _actions[args.command](args)
+    args = sys.argv[1:]
+    if len(args) < 1:
+        ac_help(args)
+        exit(-1)
+    if not(args[0] in _actions):
+        ac_help(args)
+        raise Exception("Command not found: " + args[0])
+    _actions[args[0]](args[1:])
