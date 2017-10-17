@@ -1,6 +1,8 @@
 import os
 # -*- coding: utf-8 -*-
 import json
+import api
+
 
 basedir = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), "..")
@@ -31,19 +33,15 @@ def init():
         config = read_config(config_path)
     except:
         config = {}
-    keys = ["path", "user_name", "user_id", "pass", "url"]
-    if not("path" in config):
-        if os.environ.get("UVA_PATH") is not None:
-            config["path"] = os.environ["UVA_PATH"]
+
+    # Set generic Items
+    keys = ["path", "user_name", "pass"]
     for k in keys:
         if not(k in config) or config[k] == "":
             config[k] = ask(k)
-    if os.environ.get("UVA_PATH") is None:
-        os.environ["UVA_PATH"] = config["path"]
-        bashPath = os.path.join(os.environ["HOME"], '.bashrc')
-        with open(bashPath, 'a') as file:
-            file.write("export UVA_PATH="+config["path"]+"\n")
-        print("WARNING: run: . " + bashPath)
+
+    # Api items
+    # user_id
+    if not("user_id" in config) or config["user_id"] == "":
+        config["user_id"] = api.get_user_id(config["user_name"])
     return config
-
-

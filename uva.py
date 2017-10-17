@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os
 import sys
 import getopt
@@ -23,7 +25,6 @@ def setArgumentParser():
 def ac_init(args):
     # create config.json
     config = src.config.init()
-    print(config)
     src.config.write_config(config)
 
 _actions = {
