@@ -1,4 +1,5 @@
 /*@info_submission
+date: {{date}}
 time: {{time}}
 best: {{best_time}}
 rank: {{rank_pos}}
