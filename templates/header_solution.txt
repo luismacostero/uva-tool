@@ -1,3 +1,4 @@
 /*@info_solution
-{{descr_solution}}
+categories: {{categories}}
+descrption: {{descr_solution}}
 */
