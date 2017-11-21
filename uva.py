@@ -2,7 +2,7 @@
 
 import sys
 import src.config
-
+import src.filemanager as filemanager
 
 """ Each accepted command has a function called ac_<functionName>, and 
 it is called with all the passed arguments
@@ -19,13 +19,13 @@ def ac_open(args):
     if len(args) != 1:
         ac_help(args)
         raise Exception("Program number not found")
-    print(args)
+    config = src.config.init()
+    filemanager.open_problem(config, args[0])
 
 
 def ac_init(args):
     # create config.json
     config = src.config.init()
-    src.config.write_config(config)
 
     # accepted actions and function handler for each action
 _actions = {

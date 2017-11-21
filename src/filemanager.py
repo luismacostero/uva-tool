@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 import git
-from subprocess import call
+from subprocess import Popen
+import problemfile
+
 basedir = os.getcwd()
 
 
@@ -37,12 +39,18 @@ def open_problem(config, problemid, judge="uva"):
                                    problemid=problemid,
                                    judge=judge,
                                    path=directory)
-    editos_open(config, problemid, judge=judge)
+    editor_open(config, problemid, judge=judge)
 
 
 def editor_open(config, problemid, judge="uva"):
     path = _relative(config["path"], judge+"/"+problemid)
     prefix = os.path.join(path, problemid+".")
-    extensions = ["cpp", "in", "out"]
+    extensions = ["in", "out", "cpp"]
     args = ["emacs"] + [prefix+e for e in extensions] + ["&"]
-    call(args)
+    Popen(' '.join(args), shell=True)
+
+
+def create_problem_folder(path, problemid, judge="uva"):
+    probdir = _relative(path, judge+"/"+str(problemid))
+    os.makedirs(probdir)
+    os.makedirs(os.path.join(probdir, "submissions"))

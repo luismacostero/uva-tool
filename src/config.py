@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-import api
+import src.api as api
 import getpass
-import filemanager
+import src.filemanager as filemanager
 
 basedir = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), "..")
@@ -11,11 +11,11 @@ config_path = os.path.join(basedir, "config.json")
 private_path = os.path.join(basedir, "private.json")
 
 
-def ask(basestring msg):
+def ask(msg):
     return raw_input(msg + " ")
 
 
-def ask_private(basestring msg):
+def ask_private(msg):
     return getpass.getpass(msg + " ")
 
 
@@ -54,7 +54,7 @@ def init():
         change = True
         config["path"] = ask("Where are you going to save your repo?")
 
-    if not(filemanger.check_path(config["path"])):
+    if not(filemanager.check_folder(config["path"], ".git")):
         if not("repo" in config):
             change = True
             config["repo"] = ask("Which is your git-repository url?")
@@ -74,7 +74,7 @@ def init():
     if not("acr_user" in config):
         change = True
         config["acr_user"] = ask("Which is your ACR user?")
-    if not("acr_pass" in config):
+    if not("acr_pass" in private):
         change = True
         private["acr_pass"] = ask_private("Which is your ACR pass?")
 

@@ -27,7 +27,7 @@ def get_problem_info(problemNumber):
     """Returns the information of a specific problem.
     """
 
-    #TODO: check if the problem exists
+    # TODO: check if the problem exists
     check_integer(problemNumber)
 
     url = uhunt_url + "p/num/" + str(problemNumber)
@@ -40,8 +40,8 @@ def get_problem_info(problemNumber):
 
     info["number"] = rinfo["num"]
     info["pdf_url"] = (uva_url + uva_pdfProblem_url +
-                       str(int(problemNumber / 100)) +
-                       '/' + str(problemNumber) + '.pdf')
+                       str(int(problemNumber) / 100) +
+                       "/" + str(problemNumber) + '.pdf')
     info["title"] = rinfo["title"]
     info["best_time"] = get_best_time(int(rinfo["pid"]))
     return info
@@ -59,7 +59,6 @@ def get_problemid_from_number(problemNumber):
     rjson = r.json()
 
     return int(rjson["pid"])
-
 
 
 def get_best_time(ident, problemId=True):
@@ -85,19 +84,15 @@ def get_best_time(ident, problemId=True):
     return int(rjson[0]["run"])
 
 
-    
-    
 def check_request(request):
     if request.status_code != 200:
         raise Exception("Return code error")
 
 
-
 def check_integer(number, msg=None):
     """raise an exception if number is not an integer
     """
-    if not isinstance(number, int):
+    try:
+        int(number)
+    except:
         raise ValueError(msg)
-
-
-

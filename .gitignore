@@ -1,5 +1,6 @@
 # Project ignores
 config.json
+private.json
 
 # Emacs files
 *~
