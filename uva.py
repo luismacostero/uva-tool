@@ -13,7 +13,7 @@ def ac_help(args):
 
 
 def ac_open(args):
-    if len(args) < 1:
+    if len(args) != 1:
         ac_help(args)
         raise Exception("Program number not found")
     print(args)
