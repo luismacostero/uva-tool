@@ -20,19 +20,27 @@ def ask_private(basestring msg):
 
 
 def read_config(path):
-    # Reading data back
+    """ Load the configutration from the given file.
+    """
     with open(path, 'r') as f:
         data = json.load(f)
     return data
 
 
 def write_config(config):
+    """ Saves the current configuration into a file
+    """
     # Writing JSON data
     with open(config_path, 'w') as f:
         json.dump(config, f)
 
 
 def init():
+    """ Checks if there is a config file. If it's created, load it; 
+    otherwise, create a new one asking for each field.
+    If there is a config file, but there are empty fields, ask for them too
+    """
+
     # PATH, USER_NAME, USER_ID, PASS?, URL
     try:
         config = read_config(config_path)
