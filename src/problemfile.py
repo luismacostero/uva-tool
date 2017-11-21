@@ -30,3 +30,12 @@ def create_problem(author, problemid, judge, path):
             outputFile.write(outputHeader)
             outputFile.write('\n\n')
             outputFile.write(outputBody.read())
+
+    with open(path + '/' + str(problemid) + '.in', 'w') as outputFile:
+        outputFile.write('')
+
+    with open(path + '/' + str(problemid) + '.out', 'w') as outputFile:
+        outputFile.write('')
+
+    with open(path + '/' + data["id"], 'w') as outputFile:
+        outputFile.write(data["id"])
