@@ -4,6 +4,9 @@ import sys
 import src.config
 
 
+""" Each accepted command has a function called ac_<functionName>, and 
+it is called with all the passed arguments
+"""
 def ac_help(args):
     res = __file__ + " <command>\n"
     res += "\n<commands>"
@@ -24,11 +27,13 @@ def ac_init(args):
     config = src.config.init()
     src.config.write_config(config)
 
+    # accepted actions and function handler for each action
 _actions = {
     "help": ac_help,
     "init": ac_init,
     "open": ac_open
     }
+
 
 if __name__ == "__main__":
     args = sys.argv[1:]
