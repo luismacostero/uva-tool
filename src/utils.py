@@ -5,3 +5,7 @@ def isInt(n):
         return True
     except ValueError:
         return False
+
+def toProblemId(n):
+    base = "00000"
+    return base[len(n):] + n

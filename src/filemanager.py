@@ -2,13 +2,18 @@
 import os
 import git
 from subprocess import Popen
-import problemfile
+
+import src.problemfile as problemfile
 
 basedir = os.getcwd()
 
 
 def _relative(path, other=""):
-    return os.path.join(basedir, os.path.join(path, other))
+    if other != "":
+        o = os.path.join(path, other)
+    else:
+        o = path
+    return os.path.join(basedir, o)
 
 
 def check_folder(path, foldername=""):
@@ -42,10 +47,19 @@ def open_problem(config, problemid, judge="uva"):
     editor_open(config, problemid, judge=judge)
 
 
-def editor_open(config, problemid, judge="uva"):
+def get_problem_path(config, problemid, judge="uva"):
+    path = _relative(config["path"], judge+"/"+problemid)
+    for e in ["cpp", "py", "c", "java"]:
+        F =path+"."+e
+        print(F)
+        if check_file(F):
+            return F
+    return None
+    
+def editor_open(config, problemid, judge="uva", extension="cpp"):
     path = _relative(config["path"], judge+"/"+problemid)
     prefix = os.path.join(path, problemid+".")
-    extensions = ["in", "out", "cpp"]
+    extensions = ["in", "out", extension]
     args = ["emacs"] + [prefix+e for e in extensions] + ["&"]
     Popen(' '.join(args), shell=True)
 
@@ -54,3 +68,6 @@ def create_problem_folder(path, problemid, judge="uva"):
     probdir = _relative(path, judge+"/"+str(problemid))
     os.makedirs(probdir)
     os.makedirs(os.path.join(probdir, "submissions"))
+
+def submit_problem(config, problemid, judge="uva"):
+    path = _relative(config["path"], judge+"/"+problemid)

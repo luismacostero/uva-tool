@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import jinja2
+import os
 import time
-import api
+import src.api as api
 
 
 def create_problem(author, problemid, judge, path):
-    if judge != "uva":
-        raise RuntimeError("Not implemented yet.")
+    appi = api.get_api(judge)
 
     templateLoader = jinja2.FileSystemLoader(searchpath='./templates/')
     templateEnv = jinja2.Environment(loader=templateLoader)
@@ -18,10 +18,9 @@ def create_problem(author, problemid, judge, path):
     data["id"] = ""
     data["url"] = ""
 
-    if judge == "uva":
-        probleminfo = api.uva.get_problem_info(problemid)
-        data["id"] = str(problemid) + " - " + probleminfo["title"]
-        data["url"] = probleminfo["pdf_url"]
+    probleminfo = appi.get_problem_info(problemid)
+    data["id"] = str(problemid) + " - " + probleminfo["title"]
+    data["url"] = probleminfo["pdf_url"]
 
     outputHeader = template.render(data)
 
@@ -39,3 +38,13 @@ def create_problem(author, problemid, judge, path):
 
     with open(path + '/' + data["id"], 'w') as outputFile:
         outputFile.write(data["id"])
+
+def submit_problem(user, password, problemid, judge, path):
+    appi = api.get_api(judge)
+    _, file_extension = os.path.splitext(path)
+    if file_extension == ".cpp":
+        language = "c++11"
+    else:
+        language = file_extension[1:]
+    appi.submit(user, password, problemid, path, language)
+    

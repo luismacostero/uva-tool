@@ -160,7 +160,7 @@ def submit(user, password, problemNumber, filepath, language):
     except Exception as e:
         # TODO: process exceptions
         print(e)
-        raise Exception() from e
+        raise Exception(""+str(e))
 
 
 def veredictID_to_string(veredictID, short=False):
