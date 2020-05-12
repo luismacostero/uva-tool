@@ -41,6 +41,7 @@ def init():
     If there is a config file, but there are empty fields, ask for them too
     """
     change = False
+    change_private = False
     try:
         config = read_config(config_path)
     except:
@@ -68,14 +69,14 @@ def init():
         change = True
         config["uva_user"] = ask("Which is your UVA user?")
     if not("uva_pass" in private):
-        change = True
+        change_private = True
         private["uva_pass"] = ask_private("Which is your UVA pass?")
 
     if not("acr_user" in config):
         change = True
         config["acr_user"] = ask("Which is your ACR user?")
     if not("acr_pass" in private):
-        change = True
+        change_private = True
         private["acr_pass"] = ask_private("Which is your ACR pass?")
 
     # Api items
@@ -89,6 +90,7 @@ def init():
 
     if change:
         write_config(config, config_path)
+    if change_private:
         write_config(private, private_path)
 
     return config
